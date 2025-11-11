@@ -506,35 +506,10 @@
 
         /* Heart icon */
         .icon-heart {
-            width: 70px;
-            height: 70px;
-            position: relative;
+            font-size: 80px;
+            text-align: center;
             margin: 0 auto 30px;
-        }
-
-        .icon-heart::before,
-        .icon-heart::after {
-            content: '';
-            position: absolute;
-            width: 35px;
-            height: 56px;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fda085 100%);
-            border-radius: 35px 35px 0 0;
-            box-shadow: 0 6px 20px rgba(255, 154, 158, 0.4);
-        }
-
-        .icon-heart::before {
-            left: 0;
-            top: 0;
-            transform: rotate(-45deg);
-            transform-origin: 100% 100%;
-        }
-
-        .icon-heart::after {
-            right: 0;
-            top: 0;
-            transform: rotate(45deg);
-            transform-origin: 0% 100%;
+            filter: drop-shadow(0 6px 20px rgba(255, 154, 158, 0.4));
         }
 
         /* Sad face icon */
@@ -781,7 +756,6 @@
             }
 
             .icon-sparkle,
-            .icon-heart,
             .icon-sad {
                 width: 60px;
                 height: 60px;
@@ -796,19 +770,8 @@
                 width: 50px;
             }
 
-            .icon-heart::before,
-            .icon-heart::after {
-                width: 30px;
-                height: 48px;
-                border-radius: 30px 30px 0 0;
-            }
-
-            .icon-heart::before {
-                left: 0;
-            }
-
-            .icon-heart::after {
-                right: 0;
+            .icon-heart {
+                font-size: 70px;
             }
 
             .icon-sad::before {
@@ -897,11 +860,14 @@
 
             .icon-envelope,
             .icon-sparkle,
-            .icon-heart,
             .icon-sad {
                 width: 40px;
                 height: 40px;
                 margin-bottom: 15px;
+            }
+
+            .icon-heart {
+                font-size: 50px;
             }
         }
     </style>
@@ -958,7 +924,7 @@
         <!-- Page 3: Confirmation -->
         <div class="page" id="page3">
             <div class="final-message">
-                <div class="icon icon-heart"></div>
+                <div class="icon-heart">💕</div>
                 <h2>Perfecto!</h2>
                 <div class="selected-datetime" id="selectedDateTime"></div>
                 <div class="selected-datetime" id="selectedDinner" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); margin-top: 15px;"></div>
