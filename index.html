@@ -1019,14 +1019,6 @@
         let isButtonMoving = false;
 
         function moveNoButton() {
-            const isMobile = window.innerWidth <= 600;
-
-            // On mobile, skip the movement and go straight to "Are you sure?"
-            if (isMobile) {
-                sayNo();
-                return;
-            }
-
             const button = document.getElementById('noButton');
             noButtonMoveCount++;
 
@@ -1047,8 +1039,6 @@
                 // Get viewport dimensions
                 const viewportWidth = window.innerWidth;
                 const viewportHeight = window.innerHeight;
-                const container = document.getElementById('container');
-                const containerRect = container.getBoundingClientRect();
 
                 // Calculate safe random position (keeping button fully visible)
                 const margin = 20; // Keep button away from edges
@@ -1063,6 +1053,7 @@
                 button.style.left = randomLeft + 'px';
                 button.style.top = randomTop + 'px';
                 button.style.transition = 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                button.style.zIndex = '1000';
 
                 setTimeout(() => {
                     isButtonMoving = false;
