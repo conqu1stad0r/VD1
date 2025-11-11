@@ -945,7 +945,7 @@
                 <div class="icon icon-sad"></div>
                 <h2>Ay no...</h2>
                 <p>¿Segura? Te prometo que va a estar cool</p>
-                <button class="btn-yes" onclick="showPage1()" style="margin-top: 35px;">
+                <button class="btn-yes" onclick="showDatePlan()" style="margin-top: 35px;">
                     Ok, me convenciste
                 </button>
             </div>
@@ -1016,6 +1016,8 @@
 
         // Moving No button
         let noButtonMoveCount = 0;
+        let isButtonMoving = false;
+
         function moveNoButton() {
             const isMobile = window.innerWidth <= 600;
 
@@ -1033,12 +1035,39 @@
                 return;
             }
 
-            const maxX = 200;
-            const maxY = 100;
-            const newX = (Math.random() - 0.5) * maxX;
-            const newY = (Math.random() - 0.5) * maxY;
+            // Make button jump to random position on screen
+            if (!isButtonMoving) {
+                isButtonMoving = true;
 
-            button.style.transform = `translate(${newX}px, ${newY}px)`;
+                // Get button dimensions
+                const btnRect = button.getBoundingClientRect();
+                const btnWidth = btnRect.width;
+                const btnHeight = btnRect.height;
+
+                // Get viewport dimensions
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const container = document.getElementById('container');
+                const containerRect = container.getBoundingClientRect();
+
+                // Calculate safe random position (keeping button fully visible)
+                const margin = 20; // Keep button away from edges
+                const maxLeft = viewportWidth - btnWidth - margin;
+                const maxTop = viewportHeight - btnHeight - margin;
+
+                const randomLeft = Math.random() * (maxLeft - margin) + margin;
+                const randomTop = Math.random() * (maxTop - margin) + margin;
+
+                // Set button to fixed position and animate to new location
+                button.style.position = 'fixed';
+                button.style.left = randomLeft + 'px';
+                button.style.top = randomTop + 'px';
+                button.style.transition = 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+
+                setTimeout(() => {
+                    isButtonMoving = false;
+                }, 300);
+            }
         }
 
         // Confetti effect
@@ -1075,6 +1104,14 @@
         }
 
         function showDatePlan() {
+            // Reset button position
+            const button = document.getElementById('noButton');
+            button.style.position = 'relative';
+            button.style.left = '';
+            button.style.top = '';
+            button.style.transform = '';
+            noButtonMoveCount = 0;
+
             createConfetti();
             setTimeout(() => {
                 showPage('page2');
@@ -1082,15 +1119,27 @@
         }
 
         function sayNo() {
-            showPage('page4');
+            // Reset button position
+            const button = document.getElementById('noButton');
+            button.style.position = 'relative';
+            button.style.left = '';
+            button.style.top = '';
+            button.style.transform = '';
             noButtonMoveCount = 0;
+
+            showPage('page4');
         }
 
         function showPage1() {
-            showPage('page1');
-            noButtonMoveCount = 0;
+            // Reset button position
             const button = document.getElementById('noButton');
-            button.style.transform = 'translate(0, 0)';
+            button.style.position = 'relative';
+            button.style.left = '';
+            button.style.top = '';
+            button.style.transform = '';
+            noButtonMoveCount = 0;
+
+            showPage('page1');
         }
 
         function confirmDate() {
