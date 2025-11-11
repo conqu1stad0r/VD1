@@ -1062,13 +1062,16 @@
                     button.style.animation = '';
                 }, 500);
             } else if (noButtonClickCount >= 3) {
-                // Third click: Convert to Yes button
+                // Third click: Convert to Yes button - she must click it again
                 button.textContent = 'Está bien, sí 💕';
                 button.className = 'btn-yes';
                 button.style.animation = 'tada 0.8s';
 
+                // Change the onclick handler so next click goes to date plan
+                button.onclick = showDatePlan;
+
                 setTimeout(() => {
-                    showDatePlan();
+                    button.style.animation = '';
                 }, 800);
             }
         }
