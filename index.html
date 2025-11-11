@@ -597,44 +597,6 @@
             }
         }
 
-        /* Floating hearts */
-        .hearts-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 2;
-        }
-
-        .heart {
-            position: absolute;
-            font-size: 24px;
-            animation: heartFloat 12s infinite;
-            opacity: 0;
-            user-select: none;
-            pointer-events: none;
-        }
-
-        @keyframes heartFloat {
-            0% {
-                transform: translateY(100vh) rotate(0deg) scale(0.5);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.6;
-            }
-            90% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg) scale(1);
-                opacity: 0;
-            }
-        }
-
         /* Mobile Optimizations */
         @media (max-width: 600px) {
             body {
@@ -853,7 +815,6 @@
 </head>
 <body>
     <div class="particles" id="particles"></div>
-    <div class="hearts-bg" id="heartsBg"></div>
 
     <div class="container" id="container">
         <!-- Page 1: Invitation -->
@@ -973,25 +934,6 @@
                 container.appendChild(cloud);
             }
         }
-
-        // Create floating hearts
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.textContent = '💕';
-            heart.style.left = Math.random() * 100 + '%';
-            const size = Math.random() * 10 + 15;
-            heart.style.fontSize = size + 'px';
-            heart.style.animationDuration = (Math.random() * 6 + 10) + 's';
-            heart.style.animationDelay = Math.random() * 2 + 's';
-            document.getElementById('heartsBg').appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 14000);
-        }
-
-        setInterval(createHeart, 800);
 
         // No button click handler
         let noButtonClickCount = 0;
@@ -1235,9 +1177,6 @@
 
         // Initialize
         createParticles();
-        for (let i = 0; i < 5; i++) {
-            setTimeout(createHeart, i * 300);
-        }
     </script>
 </body>
 </html>
