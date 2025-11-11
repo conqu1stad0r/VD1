@@ -707,23 +707,26 @@
             }
 
             .button-group {
+                flex-direction: column;
                 gap: 15px;
                 margin-top: 30px;
-                min-height: 100px;
-                flex-wrap: wrap;
+                min-height: auto;
+                align-items: stretch;
             }
 
             button {
-                padding: 16px 35px;
-                font-size: 0.95em;
-                letter-spacing: 1px;
-                min-height: 50px;
-                width: auto;
+                padding: 16px 20px;
+                font-size: 0.9em;
+                letter-spacing: 0.5px;
+                min-height: 52px;
+                width: 100%;
+                white-space: normal;
+                line-height: 1.3;
             }
 
             .btn-no {
-                /* Ensure the No button doesn't go off-screen on mobile */
-                max-width: 150px;
+                position: static;
+                transform: none !important;
             }
 
             .date-plan {
@@ -823,7 +826,7 @@
         /* Extra small phones */
         @media (max-width: 380px) {
             .container {
-                padding: 30px 20px;
+                padding: 30px 18px;
             }
 
             h1 {
@@ -831,9 +834,9 @@
             }
 
             button {
-                padding: 14px 28px;
-                font-size: 0.9em;
-                min-height: 48px;
+                padding: 14px 18px;
+                font-size: 0.85em;
+                min-height: 50px;
             }
 
             .invitation-text {
@@ -1014,6 +1017,14 @@
         // Moving No button
         let noButtonMoveCount = 0;
         function moveNoButton() {
+            const isMobile = window.innerWidth <= 600;
+
+            // On mobile, skip the movement and go straight to "Are you sure?"
+            if (isMobile) {
+                sayNo();
+                return;
+            }
+
             const button = document.getElementById('noButton');
             noButtonMoveCount++;
 
@@ -1022,10 +1033,8 @@
                 return;
             }
 
-            // Reduce movement on mobile to keep button on screen
-            const isMobile = window.innerWidth <= 600;
-            const maxX = isMobile ? 80 : 200;
-            const maxY = isMobile ? 50 : 100;
+            const maxX = 200;
+            const maxY = 100;
             const newX = (Math.random() - 0.5) * maxX;
             const newY = (Math.random() - 0.5) * maxY;
 
