@@ -947,6 +947,9 @@
                 <div class="selected-datetime" id="selectedDinner" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); margin-top: 15px;"></div>
                 <p style="margin-top: 20px;">Ya estoy emocionado por esto</p>
                 <p>Te mando los detalles después~</p>
+                <p style="margin-top: 20px; font-size: 0.9em; color: #b8a8a8; font-style: italic;">
+                    ✓ Tus detalles han sido guardados
+                </p>
                 <p style="margin-top: 35px; font-size: 0.95em; color: #b8a8a8;">
                     Nos vemos pronto linda
                 </p>
@@ -1168,17 +1171,105 @@
             };
 
             const formattedDate = date.toLocaleDateString('es-ES', options);
+
+            // Save to localStorage
+            const dateData = {
+                dinner: dinnerInput,
+                date: dateInput,
+                time: timeInput,
+                formattedDate: formattedDate,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('virtualDateDetails', JSON.stringify(dateData));
+
+            // Display on page
             document.getElementById('selectedDateTime').innerHTML =
                 `📅 ${formattedDate}`;
 
             document.getElementById('selectedDinner').innerHTML =
                 `🍽️ Cena: ${dinnerInput}`;
 
+            // Send data via Formspree (you'll need to replace with your endpoint)
+            sendDateDetails(dateData);
+
             createConfetti();
             setTimeout(() => {
                 showPage('page3');
             }, 300);
         }
+
+        // Send date details via email (using Formspree or mailto)
+        function sendDateDetails(data) {
+            // Option 1: Use Formspree (recommended for production)
+            // Sign up at https://formspree.io/ and replace YOUR_FORMSPREE_ID
+            const formspreeEndpoint = 'https://formspree.io/f/YOUR_FORMSPREE_ID';
+
+            // Try to send via Formspree
+            fetch(formspreeEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    subject: 'Nueva Cita Virtual Confirmada! 💕',
+                    dinner: data.dinner,
+                    date: data.formattedDate,
+                    rawDate: data.date,
+                    rawTime: data.time
+                })
+            }).catch(err => {
+                // Silently fail - data is still saved in localStorage
+                console.log('Form submission failed, but data saved locally');
+            });
+
+            // Option 2: Also create mailto link as backup
+            // Uncomment below to enable email link
+            /*
+            const mailtoLink = `mailto:your-email@example.com?subject=Nueva Cita Virtual 💕&body=Cena: ${data.dinner}%0D%0AFecha: ${data.formattedDate}`;
+            // Auto-open email client (optional)
+            // window.location.href = mailtoLink;
+            */
+        }
+
+        // Load saved data on page load
+        function loadSavedData() {
+            const saved = localStorage.getItem('virtualDateDetails');
+            if (saved) {
+                const data = JSON.parse(saved);
+                console.log('Saved date details:', data);
+
+                // Pre-fill form if user comes back
+                const dinnerField = document.getElementById('dinner');
+                const dateField = document.getElementById('date');
+                const timeField = document.getElementById('time');
+
+                if (dinnerField && !dinnerField.value) {
+                    dinnerField.value = data.dinner;
+                }
+                if (dateField && !dateField.value) {
+                    dateField.value = data.date;
+                }
+                if (timeField && !timeField.value) {
+                    timeField.value = data.time;
+                }
+            }
+        }
+
+        // Function to view saved details (can be called from console)
+        window.viewSavedDetails = function() {
+            const saved = localStorage.getItem('virtualDateDetails');
+            if (saved) {
+                const data = JSON.parse(saved);
+                alert(`Detalles guardados:\n\nCena: ${data.dinner}\nFecha: ${data.formattedDate}`);
+                return data;
+            } else {
+                alert('No hay detalles guardados todavía');
+                return null;
+            }
+        };
+
+        // Call on page load
+        window.addEventListener('load', loadSavedData);
 
         // Initialize
         createParticles();
