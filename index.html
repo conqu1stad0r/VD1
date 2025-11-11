@@ -914,7 +914,7 @@
             </div>
             <div class="button-group" id="buttonGroup">
                 <button class="btn-yes" onclick="showDatePlan()">Me apunto</button>
-                <button class="btn-no" id="noButton" onmouseover="moveNoButton()" onclick="moveNoButton()">Mmm no sé</button>
+                <button class="btn-no" id="noButton" onclick="handleNoClick()">Mmm no sé</button>
             </div>
         </div>
 
@@ -1040,52 +1040,56 @@
 
         setInterval(createHeart, 800);
 
-        // Moving No button
-        let noButtonMoveCount = 0;
-        let isButtonMoving = false;
+        // No button click handler
+        let noButtonClickCount = 0;
 
-        function moveNoButton() {
+        function handleNoClick() {
             const button = document.getElementById('noButton');
-            noButtonMoveCount++;
+            noButtonClickCount++;
 
-            if (noButtonMoveCount > 3) {
-                sayNo();
-                return;
-            }
-
-            // Make button jump to random position on screen
-            if (!isButtonMoving) {
-                isButtonMoving = true;
-
-                // Get button dimensions
-                const btnRect = button.getBoundingClientRect();
-                const btnWidth = btnRect.width;
-                const btnHeight = btnRect.height;
-
-                // Get viewport dimensions
-                const viewportWidth = window.innerWidth;
-                const viewportHeight = window.innerHeight;
-
-                // Calculate safe random position (keeping button fully visible)
-                const margin = 20; // Keep button away from edges
-                const maxLeft = viewportWidth - btnWidth - margin;
-                const maxTop = viewportHeight - btnHeight - margin;
-
-                const randomLeft = Math.random() * (maxLeft - margin) + margin;
-                const randomTop = Math.random() * (maxTop - margin) + margin;
-
-                // Set button to fixed position and animate to new location
-                button.style.position = 'fixed';
-                button.style.left = randomLeft + 'px';
-                button.style.top = randomTop + 'px';
-                button.style.transition = 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-                button.style.zIndex = '1000';
+            if (noButtonClickCount === 1) {
+                // First click: "Are you sure?"
+                button.textContent = '¿Estás segura?';
+                button.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    button.style.animation = '';
+                }, 500);
+            } else if (noButtonClickCount === 2) {
+                // Second click: "You can change your mind"
+                button.textContent = 'Puedes cambiar de opinión~';
+                button.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    button.style.animation = '';
+                }, 500);
+            } else if (noButtonClickCount >= 3) {
+                // Third click: Convert to Yes button
+                button.textContent = 'Está bien, sí 💕';
+                button.className = 'btn-yes';
+                button.style.animation = 'tada 0.8s';
 
                 setTimeout(() => {
-                    isButtonMoving = false;
-                }, 300);
+                    showDatePlan();
+                }, 800);
             }
         }
+
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+            @keyframes tada {
+                0% { transform: scale(1) rotate(0deg); }
+                10%, 20% { transform: scale(0.9) rotate(-3deg); }
+                30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+                40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+                100% { transform: scale(1) rotate(0deg); }
+            }
+        `;
+        document.head.appendChild(style);
 
         // Confetti effect
         function createConfetti() {
@@ -1121,13 +1125,11 @@
         }
 
         function showDatePlan() {
-            // Reset button position
+            // Reset button
             const button = document.getElementById('noButton');
-            button.style.position = 'relative';
-            button.style.left = '';
-            button.style.top = '';
-            button.style.transform = '';
-            noButtonMoveCount = 0;
+            button.textContent = 'Mmm no sé';
+            button.className = 'btn-no';
+            noButtonClickCount = 0;
 
             createConfetti();
             setTimeout(() => {
@@ -1136,25 +1138,21 @@
         }
 
         function sayNo() {
-            // Reset button position
+            // Reset button
             const button = document.getElementById('noButton');
-            button.style.position = 'relative';
-            button.style.left = '';
-            button.style.top = '';
-            button.style.transform = '';
-            noButtonMoveCount = 0;
+            button.textContent = 'Mmm no sé';
+            button.className = 'btn-no';
+            noButtonClickCount = 0;
 
             showPage('page4');
         }
 
         function showPage1() {
-            // Reset button position
+            // Reset button
             const button = document.getElementById('noButton');
-            button.style.position = 'relative';
-            button.style.left = '';
-            button.style.top = '';
-            button.style.transform = '';
-            noButtonMoveCount = 0;
+            button.textContent = 'Mmm no sé';
+            button.className = 'btn-no';
+            noButtonClickCount = 0;
 
             showPage('page1');
         }
