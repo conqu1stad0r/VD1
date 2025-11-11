@@ -537,8 +537,8 @@
 
         /* Sad face icon */
         .icon-sad {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border: 4px solid #c4a8a8;
             border-radius: 50%;
             position: relative;
@@ -549,24 +549,24 @@
         .icon-sad::before {
             content: '';
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background: #c4a8a8;
             border-radius: 50%;
-            top: 18px;
-            left: 14px;
-            box-shadow: 24px 0 0 #c4a8a8;
+            top: 20px;
+            left: 18px;
+            box-shadow: 28px 0 0 #c4a8a8;
         }
 
         .icon-sad::after {
             content: '';
             position: absolute;
-            width: 30px;
-            height: 15px;
+            width: 28px;
+            height: 14px;
             border: 3px solid #c4a8a8;
             border-top: none;
-            border-radius: 0 0 15px 15px;
-            bottom: 12px;
+            border-radius: 0 0 14px 14px;
+            bottom: 16px;
             left: 50%;
             transform: translateX(-50%) rotate(180deg);
         }
@@ -781,8 +781,8 @@
             .icon-sparkle,
             .icon-heart,
             .icon-sad {
-                width: 50px;
-                height: 50px;
+                width: 60px;
+                height: 60px;
                 margin-bottom: 25px;
             }
 
@@ -792,6 +792,20 @@
 
             .icon-sparkle::after {
                 width: 50px;
+            }
+
+            .icon-sad::before {
+                width: 6px;
+                height: 6px;
+                top: 18px;
+                left: 16px;
+                box-shadow: 22px 0 0 #c4a8a8;
+            }
+
+            .icon-sad::after {
+                width: 24px;
+                height: 12px;
+                bottom: 14px;
             }
 
             .final-message {
