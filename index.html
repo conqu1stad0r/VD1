@@ -678,6 +678,198 @@
                 opacity: 0;
             }
         }
+
+        /* Mobile Optimizations */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 40px 25px;
+                width: 95%;
+                max-height: 95vh;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+                margin-bottom: 15px;
+            }
+
+            .invitation-text {
+                font-size: 1.05em;
+                margin-bottom: 30px;
+            }
+
+            .invitation-text p {
+                margin: 12px 0;
+            }
+
+            .button-group {
+                gap: 15px;
+                margin-top: 30px;
+                min-height: 100px;
+                flex-wrap: wrap;
+            }
+
+            button {
+                padding: 16px 35px;
+                font-size: 0.95em;
+                letter-spacing: 1px;
+                min-height: 50px;
+                width: auto;
+            }
+
+            .btn-no {
+                /* Ensure the No button doesn't go off-screen on mobile */
+                max-width: 150px;
+            }
+
+            .date-plan {
+                padding: 25px 20px;
+                margin: 20px 0;
+            }
+
+            .date-plan h3 {
+                font-size: 1.3em;
+                margin-bottom: 18px;
+            }
+
+            .date-plan li {
+                padding: 12px 0;
+                padding-left: 35px;
+                font-size: 0.95em;
+            }
+
+            .datetime-picker {
+                margin-top: 25px;
+            }
+
+            .datetime-picker label {
+                font-size: 1em;
+                margin-bottom: 10px;
+            }
+
+            .datetime-picker input {
+                padding: 16px 18px;
+                font-size: 16px; /* Prevents zoom on iOS */
+                margin-bottom: 20px;
+            }
+
+            .btn-submit {
+                padding: 18px;
+                font-size: 1.1em;
+                margin-top: 20px;
+            }
+
+            .icon-envelope {
+                width: 60px;
+                height: 42px;
+                margin-bottom: 25px;
+            }
+
+            .icon-envelope::before {
+                border-left: 30px solid transparent;
+                border-right: 30px solid transparent;
+                border-top: 25px solid rgba(254, 207, 239, 0.9);
+            }
+
+            .icon-sparkle,
+            .icon-heart,
+            .icon-sad {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 25px;
+            }
+
+            .icon-sparkle::before {
+                height: 50px;
+            }
+
+            .icon-sparkle::after {
+                width: 50px;
+            }
+
+            .final-message {
+                padding: 20px 10px;
+            }
+
+            .final-message h2 {
+                font-size: 2.2em;
+                margin-bottom: 20px;
+            }
+
+            .final-message p {
+                font-size: 1.1em;
+            }
+
+            .selected-datetime {
+                padding: 20px;
+                font-size: 1.1em;
+                margin: 20px 0;
+            }
+
+            /* Reduce particle count on mobile for performance */
+            .particle {
+                display: none;
+            }
+
+            .particle:nth-child(-n+15) {
+                display: block;
+            }
+        }
+
+        /* Extra small phones */
+        @media (max-width: 380px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            button {
+                padding: 14px 28px;
+                font-size: 0.9em;
+                min-height: 48px;
+            }
+
+            .invitation-text {
+                font-size: 1em;
+            }
+
+            .date-plan li {
+                font-size: 0.9em;
+            }
+        }
+
+        /* Landscape phone optimization */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .container {
+                max-height: 90vh;
+                padding: 25px 30px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 10px;
+            }
+
+            .invitation-text {
+                margin-bottom: 20px;
+            }
+
+            .icon-envelope,
+            .icon-sparkle,
+            .icon-heart,
+            .icon-sad {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -707,16 +899,18 @@
             <div class="date-plan">
                 <h3>Tengo algunas ideas en mente</h3>
                 <ul>
-                    <li>Nos conectamos y platicamos con nuestras bebidas favoritas</li>
-                    <li>Vemos una peli juntos (obvio sincronizada)</li>
-                    <li>Jugamos algo online y te demuestro que soy mejor que tú</li>
-                    <li>Terminamos la noche compartiendo música que nos gusta</li>
+                    <li>Cenamos juntos (tú eliges qué quieres comer)</li>
+                    <li>Brindamos con una copa de vino</li>
+                    <li>Jugamos un juego de cartas personalizado inspirado en "We're Not Really Strangers"</li>
                 </ul>
                 <p style="margin-top: 24px; font-style: italic; opacity: 0.8;">
-                    Si tienes otras ideas, podemos cambiar el plan. Solo quiero pasar un buen rato contigo~
+                    Va a ser una noche divertida, lo prometo~
                 </p>
             </div>
             <div class="datetime-picker">
+                <label for="dinner">¿Qué te gustaría cenar?</label>
+                <input type="text" id="dinner" name="dinner" placeholder="Pizza, sushi, tacos..." required>
+
                 <label for="date">¿Qué día te viene bien?</label>
                 <input type="date" id="date" name="date" required>
 
@@ -733,7 +927,8 @@
                 <div class="icon icon-heart"></div>
                 <h2>Perfecto!</h2>
                 <div class="selected-datetime" id="selectedDateTime"></div>
-                <p>Ya estoy emocionado por esto</p>
+                <div class="selected-datetime" id="selectedDinner" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); margin-top: 15px;"></div>
+                <p style="margin-top: 20px;">Ya estoy emocionado por esto</p>
                 <p>Te mando los detalles después~</p>
                 <p style="margin-top: 35px; font-size: 0.95em; color: #b8a8a8;">
                     Nos vemos pronto linda
@@ -827,8 +1022,10 @@
                 return;
             }
 
-            const maxX = 200;
-            const maxY = 100;
+            // Reduce movement on mobile to keep button on screen
+            const isMobile = window.innerWidth <= 600;
+            const maxX = isMobile ? 80 : 200;
+            const maxY = isMobile ? 50 : 100;
             const newX = (Math.random() - 0.5) * maxX;
             const newY = (Math.random() - 0.5) * maxY;
 
@@ -838,7 +1035,8 @@
         // Confetti effect
         function createConfetti() {
             const colors = ['#ff9a9e', '#fecfef', '#fda085', '#ffeaa7', '#fab1a0'];
-            const confettiCount = 150;
+            const isMobile = window.innerWidth <= 600;
+            const confettiCount = isMobile ? 80 : 150;
 
             for (let i = 0; i < confettiCount; i++) {
                 setTimeout(() => {
@@ -887,11 +1085,12 @@
         }
 
         function confirmDate() {
+            const dinnerInput = document.getElementById('dinner').value.trim();
             const dateInput = document.getElementById('date').value;
             const timeInput = document.getElementById('time').value;
 
-            if (!dateInput || !timeInput) {
-                alert('Ey, necesito que elijas una fecha y hora primero~');
+            if (!dinnerInput || !dateInput || !timeInput) {
+                alert('Ey, necesito que llenes todo primero~');
                 return;
             }
 
@@ -908,6 +1107,9 @@
             const formattedDate = date.toLocaleDateString('es-ES', options);
             document.getElementById('selectedDateTime').innerHTML =
                 `📅 ${formattedDate}`;
+
+            document.getElementById('selectedDinner').innerHTML =
+                `🍽️ Cena: ${dinnerInput}`;
 
             createConfetti();
             setTimeout(() => {
